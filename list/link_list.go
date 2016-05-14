@@ -1,4 +1,9 @@
-package main
+package list
+
+import (
+// "errors"
+// "fmt"
+)
 
 // List represents a doubly linked list.
 // The zero value for List is an empty list ready to use.
