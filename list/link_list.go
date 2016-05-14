@@ -16,25 +16,23 @@ type List struct {
 type Node struct {
 	next *Node
 	Val  interface{}
-	list *List
 }
 
-// HeadInsert insert node at the begining of list
-func (list *List) HeadInsert(value interface{}) {
-	newNode := &Node{Val: value}
-	if list.len == 0 {
+// Prepends insert node at the first index of list
+func (list *List) Prepends(values ...interface{}) {
+	for _, value := range values {
+		newNode := &Node{next: list.head, Val: value}
 		list.head = newNode
-		list.last = newNode
-	} else {
-		newNode.next = list.head
-		list.head = newNode
+		if list.len == 0 {
+			list.last = newNode
+		}
+		list.len++
 	}
-	list.len++
 }
 
 // Append a value (one or more) at the end of the list (same as Add())
 func (list *List) Append(value interface{}) {
-	newNode := &Node{Val: value, list: list}
+	newNode := &Node{Val: value}
 	if list.len == 0 {
 		list.head = newNode
 		list.last = newNode
@@ -78,6 +76,59 @@ func (list *List) NumberOf() int {
 	}
 	list.len = num
 	return num
+}
+
+// withinRange Check that the index is withing bounds of the list
+func (list *List) withinRange(index int) bool {
+	return index >= 0 && index < list.len && list.len != 0
+}
+
+// Get Returns the element at index.
+// Second return parameter is true if index is within bounds of the array and array is not empty, otherwise false.
+func (list *List) Get(index int) (interface{}, bool) {
+
+	if !list.withinRange(index) {
+		return nil, false
+	}
+
+	element := list.head
+	for e := 0; e != index; e, element = e+1, element.next {
+	}
+
+	return element.Val, true
+}
+
+// Remove , according gaven index to remove that node
+func (list *List) Remove(index int) {
+	if !list.withinRange(index) {
+		return
+	}
+	if list.len == 1 {
+		list.len = 0
+		list.head = nil
+		list.last = nil
+	}
+	var beforeNode *Node
+	node := list.head
+	for i := 0; i != index; i, node = i+1, node.next {
+		beforeNode = node
+	}
+
+	if node == list.head {
+		list.head = node.next
+	}
+
+	if node == list.last {
+		list.last = beforeNode
+	}
+
+	if beforeNode != nil {
+		beforeNode.next = node.next
+	}
+
+	node = nil
+	list.len--
+
 }
 
 // New returns an initialized list.
