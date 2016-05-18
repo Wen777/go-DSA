@@ -1,4 +1,4 @@
-package list
+package singlylinkedlist
 
 import (
 	"github.com/stretchr/testify/assert"
