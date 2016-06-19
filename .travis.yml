@@ -1,0 +1,11 @@
+
+language: go
+go:
+ - 1.6.1
+ - tip
+
+script:
+ - go test -v ./...
+
+notifications:
+  email: false
