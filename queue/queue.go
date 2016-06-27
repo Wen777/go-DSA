@@ -15,9 +15,6 @@ type Queue struct {
 	head, tail *node
 	len        int
 	lock       *sync.Mutex
-	// waiters  waiters
-	// items    items
-	// disposed bool
 }
 
 // NewQueue function to create Queue instance
