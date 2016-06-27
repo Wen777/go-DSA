@@ -6,9 +6,8 @@ import (
 
 // List represents a doubly linked list.
 type List struct {
-	first *element
-	last  *element
-	size  int
+	head, last *element
+	len        int
 }
 
 // element is a structure of link list
@@ -26,14 +25,14 @@ func New() *List {
 func (list *List) Add(values ...interface{}) {
 	for _, item := range values {
 		newElement := &element{value: item, prev: list.last}
-		if list.size == 0 {
-			list.first = newElement
+		if list.len == 0 {
+			list.head = newElement
 			list.last = newElement
 		} else {
 			list.last.next = newElement
 			list.last = newElement
 		}
-		list.size++
+		list.len++
 	}
 }
 
@@ -42,18 +41,18 @@ func (list *List) Append(values ...interface{}) {
 	list.Add(values)
 }
 
-// Prepends insert node at the first index of list
+// Prepends insert node at the head index of list
 func (list *List) Prepends(values ...interface{}) {
 	for index := len(values) - 1; index >= 0; index-- {
-		newElement := &element{value: values[index], next: list.first}
-		if list.size == 0 {
-			list.first = newElement
+		newElement := &element{value: values[index], next: list.head}
+		if list.len == 0 {
+			list.head = newElement
 			list.last = newElement
 		} else {
-			list.first.prev = newElement
-			list.first = newElement
+			list.head.prev = newElement
+			list.head = newElement
 		}
-		list.size++
+		list.len++
 	}
 }
 
@@ -64,19 +63,19 @@ func (list *List) Get(index int) (interface{}, bool) {
 		return nil, false
 	}
 
-	if list.size-index < index {
+	if list.len-index < index {
 		elem := list.last
 		element := list.last
-		for i := 0; i < list.size-index; i, elem = i+1, elem.prev {
-			fmt.Println("FIRST ", i)
+		for i := 0; i < list.len-index; i, elem = i+1, elem.prev {
+			fmt.Println("HEAD ", i)
 		}
-		for e := list.size - 1; e != index; e, element = e-1, element.prev {
+		for e := list.len - 1; e != index; e, element = e-1, element.prev {
 			fmt.Println("SECOND ", e)
 		}
 		return elem.value, true
 	}
 
-	element := list.first
+	element := list.head
 	for e := 0; e != index; e, element = e+1, element.next {
 	}
 	return element.value, true
@@ -84,5 +83,5 @@ func (list *List) Get(index int) (interface{}, bool) {
 
 // withinRange Check that the index is withing bounds of the list
 func (list *List) withinRange(index int) bool {
-	return index >= 0 && index < list.size && list.size != 0
+	return index >= 0 && index < list.len && list.len != 0
 }
