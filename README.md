@@ -4,9 +4,6 @@
 
 Data Structure and Algorithm
 
-I'm a full time developer and don't have any CS degree. Self learning is the only way I can improve my skill.
-Please review this repo and leave any comment.
-
 # Data Structure
 
 - [List](#lists)
